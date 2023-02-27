@@ -5,27 +5,8 @@ const cloudinary = require('../utils/cloudinary');
 exports.create = async (req, res) => {
   const { name, note } = req.body;
 
-  //   try {
-  //     const { name, note, image } = req.body;
-  //     const product = await prisma.product.create({
-  //       data: {
-  //         name: name,
-  //         note: note,
-  //         image: image,
-  //       },
-  //     });
-
-  //     res.status(201).send({
-  //       status: 'success',
-  //       message: 'product created',
-  //       data: {
-  //         result: product,
-  //       },
-  //     });
-  //   }
-
   try {
-    const existProduct = await prisma.products.findUnique({
+    const existProduct = await prisma.product.findUnique({
       where: {
         name: name,
       },
@@ -43,11 +24,11 @@ exports.create = async (req, res) => {
         unique_filename: true,
       });
 
-      const productData = await prisma.products.create({
+      const productData = await prisma.product.create({
         data: {
           name: name,
           note: note,
-          image: picture,
+          image: picture.public_id,
         },
       });
 
@@ -55,7 +36,9 @@ exports.create = async (req, res) => {
         status: 'Success',
         message: 'Create Product Success',
         data: {
-          productData,
+          result: {
+            productData,
+          },
         },
       });
     }
