@@ -1,7 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-exports.create = async (req, res) => {
+exports.createCategory = async (req, res) => {
   try {
     const { name } = req.body;
     const category = await prisma.category.create({
@@ -45,7 +45,7 @@ exports.categories = async (req, res) => {
   }
 };
 
-exports.getById = async (req, res) => {
+exports.getCategoryById = async (req, res) => {
   try {
     const { id } = req.params;
     const category = await prisma.category.findUnique({
@@ -69,7 +69,7 @@ exports.getById = async (req, res) => {
   }
 };
 
-exports.updateById = async (req, res) => {
+exports.updateCategoryById = async (req, res) => {
   try {
     const { id } = req.params;
     const { name } = req.body;
@@ -99,7 +99,7 @@ exports.updateById = async (req, res) => {
   }
 };
 
-exports.deleteById = async (req, res) => {
+exports.deleteCategoryById = async (req, res) => {
   try {
     const { id } = req.params;
     const category = await prisma.category.delete({

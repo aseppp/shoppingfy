@@ -7,12 +7,12 @@ import { BsListStars } from 'react-icons/bs';
 import { MdOutlineHistory } from 'react-icons/md';
 import { CgShoppingCart } from 'react-icons/cg';
 import { BiChart } from 'react-icons/bi';
-import { Box, Icon } from '@chakra-ui/react';
+import { Box, Icon, useDisclosure } from '@chakra-ui/react';
 
 export const Sidebar = () => {
   return (
     <>
-      <Box w={['60px', '100px']} position='fixed' left={0} bg='white'>
+      <Box w={['60px', '90px']} position='fixed' left={0} bg='white'>
         <Box
           display='flex'
           justifyContent='space-between'
@@ -37,10 +37,10 @@ export const Sidebar = () => {
             <Link href='/'>
               <Icon w={8} h={8} as={BsListStars} />
             </Link>
-            <Link href='/'>
+            <Link href='/history'>
               <Icon w={8} h={8} as={MdOutlineHistory} />
             </Link>
-            <Link href='/'>
+            <Link href='/chart'>
               <Icon w={8} h={8} as={BiChart} />
             </Link>
           </Box>

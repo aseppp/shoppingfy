@@ -16,4 +16,18 @@ router.get('/product/:id', getById);
 router.put('/product/:id', uploadFile('image'), updateById);
 router.delete('/product/:id', deleteById);
 
+//CATEGORY ROUTES
+const {
+  createCategory,
+  getCategoryById,
+  updateCategoryById,
+  deleteCategoryById,
+  categories,
+} = require('../controllers/category.controller');
+router.post('/category', createCategory);
+router.get('/category', categories);
+router.get('/category/:id', getCategoryById);
+router.put('/category/:id', updateCategoryById);
+router.delete('/category/:id', deleteCategoryById);
+
 module.exports = router;

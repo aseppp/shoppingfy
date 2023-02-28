@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 const cloudinary = require('../utils/cloudinary');
 
 exports.create = async (req, res) => {
-  const { name, note } = req.body;
+  const { name, note, categoryId } = req.body;
 
   try {
     const existProduct = await prisma.product.findUnique({
@@ -29,6 +29,7 @@ exports.create = async (req, res) => {
           name: name,
           note: note,
           image: picture.public_id,
+          category: { connect: { id: categoryId } },
         },
       });
 
@@ -53,7 +54,11 @@ exports.create = async (req, res) => {
 
 exports.getProducts = async (req, res) => {
   try {
-    const products = await prisma.product.findMany();
+    const products = await prisma.product.findMany({
+      include: {
+        category: true,
+      },
+    });
     res.status(200).send({
       status: 'success',
       message: 'success fetching products',
