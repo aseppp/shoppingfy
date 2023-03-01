@@ -6,8 +6,8 @@ import { CacheProvider } from '@chakra-ui/next-js';
 import { ChakraProvider } from '@chakra-ui/react';
 import { extendTheme } from '@chakra-ui/react';
 import { mode } from '@chakra-ui/theme-tools';
-import { usePathname } from 'next/navigation';
 import { Quicksand } from 'next/font/google';
+import { FunctionBarProvider } from './context';
 import './globals.css';
 
 const quicksand = Quicksand({
@@ -31,17 +31,17 @@ const styles = {
 const theme = extendTheme({ styles, config });
 
 export default function RootLayout({ children }) {
-  const router = usePathname();
-  console.log(router);
-
   return (
     <html lang='en'>
       <head />
       <body className={quicksand.className}>
         <CacheProvider>
           <ChakraProvider theme={theme}>
-            <Sidebar />
-            <FunctionSidebar />
+            <FunctionBarProvider>
+              <Sidebar />
+              <FunctionSidebar />
+            </FunctionBarProvider>
+
             {children}
           </ChakraProvider>
         </CacheProvider>

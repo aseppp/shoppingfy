@@ -1,15 +1,18 @@
 'use client';
 
-import React from 'react';
+import React, { useContext } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BsListStars } from 'react-icons/bs';
 import { MdOutlineHistory } from 'react-icons/md';
 import { CgShoppingCart } from 'react-icons/cg';
 import { BiChart } from 'react-icons/bi';
-import { Box, Icon, useDisclosure } from '@chakra-ui/react';
+import { Box, Icon } from '@chakra-ui/react';
+import { FunctionBarContext } from '@/app/context';
 
 export const Sidebar = () => {
+  const [isOpen, setIsOpen] = useContext(FunctionBarContext);
+
   return (
     <>
       <Box w={['60px', '90px']} position='fixed' left={0} bg='white'>
@@ -55,7 +58,7 @@ export const Sidebar = () => {
             alignItems='center'
             p={2}
           >
-            <Link href='/cart'>
+            <Box onClick={() => setIsOpen(!isOpen)} cursor='pointer'>
               <Icon
                 w={7}
                 h={7}
@@ -65,7 +68,7 @@ export const Sidebar = () => {
                 alignItems='center'
                 color='white'
               />
-            </Link>
+            </Box>
           </Box>
         </Box>
       </Box>

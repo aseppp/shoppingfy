@@ -1,10 +1,13 @@
 'use client';
 
-import React from 'react';
-import { Box } from '@chakra-ui/react';
+import React, { useContext } from 'react';
 import Cart from './Cart';
+import { Box } from '@chakra-ui/react';
+import { FunctionBarContext } from '@/app/context';
 
 const FunctionSidebar = () => {
+  const [isOpen] = useContext(FunctionBarContext);
+
   return (
     <>
       <Box
@@ -15,9 +18,7 @@ const FunctionSidebar = () => {
         height='100vh'
         zIndex='10'
       >
-        <Box>
-          <Cart />
-        </Box>
+        <Box>{isOpen && <Cart />}</Box>
       </Box>
     </>
   );
