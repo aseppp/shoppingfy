@@ -28,7 +28,11 @@ exports.createCategory = async (req, res) => {
 
 exports.categories = async (req, res) => {
   try {
-    const category = await prisma.category.findMany();
+    const category = await prisma.category.findMany({
+      include: {
+        product: true,
+      },
+    });
     res.status(200).send({
       status: 'success',
       message: 'success fetching category',

@@ -8,7 +8,7 @@ import { CgShoppingCart } from 'react-icons/cg';
 import { BiChart } from 'react-icons/bi';
 import { Box, Icon, Link, Tooltip } from '@chakra-ui/react';
 import { FunctionBarContext } from '@/app/context';
-import { usePathname } from 'next/navigation';
+// import { usePathname } from 'next/navigation';
 import NextLink from 'next/link';
 
 const link = [
@@ -31,8 +31,8 @@ const link = [
 
 export const Sidebar = () => {
   const [isOpen, setIsOpen] = useContext(FunctionBarContext);
-  const router = usePathname();
-  console.log(router);
+  // const router = usePathname();
+  // console.log(router);
 
   return (
     <>
