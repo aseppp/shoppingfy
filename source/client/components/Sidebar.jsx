@@ -1,17 +1,38 @@
 'use client';
 
 import React, { useContext } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 import { BsListStars } from 'react-icons/bs';
 import { MdOutlineHistory } from 'react-icons/md';
 import { CgShoppingCart } from 'react-icons/cg';
 import { BiChart } from 'react-icons/bi';
-import { Box, Icon } from '@chakra-ui/react';
+import { Box, Icon, Link, Tooltip } from '@chakra-ui/react';
 import { FunctionBarContext } from '@/app/context';
+import { usePathname } from 'next/navigation';
+import NextLink from 'next/link';
+
+const link = [
+  {
+    name: 'Products',
+    pathName: '/',
+    icon: BsListStars,
+  },
+  {
+    name: 'History',
+    pathName: '/history',
+    icon: MdOutlineHistory,
+  },
+  {
+    name: 'Chart',
+    pathName: '/chart',
+    icon: BiChart,
+  },
+];
 
 export const Sidebar = () => {
   const [isOpen, setIsOpen] = useContext(FunctionBarContext);
+  const router = usePathname();
+  console.log(router);
 
   return (
     <>
@@ -37,15 +58,27 @@ export const Sidebar = () => {
             position='relative'
             gap={['35px', '67px']}
           >
-            <Link href='/'>
-              <Icon w={8} h={8} as={BsListStars} />
-            </Link>
-            <Link href='/history'>
-              <Icon w={8} h={8} as={MdOutlineHistory} />
-            </Link>
-            <Link href='/chart'>
-              <Icon w={8} h={8} as={BiChart} />
-            </Link>
+            {link.map((item, key) => (
+              <Tooltip
+                // hasArrow
+                label={item.name}
+                placement='right'
+                key={key}
+                fontSize='xs'
+              >
+                <Link as={NextLink} href={item.pathName} variant='subtle'>
+                  <Icon
+                    w={8}
+                    h={8}
+                    as={item.icon}
+                    _hover={{
+                      background: 'white',
+                      color: '#f9a109',
+                    }}
+                  />
+                </Link>
+              </Tooltip>
+            ))}
           </Box>
 
           <Box

@@ -78,7 +78,7 @@ const Cart = () => {
           </Box>
 
           <Box width='100%' display='flex' justifyContent='end' mb='130px'>
-            <Box width='300px'>
+            <Box width='250px'>
               <Image src='/human.svg' width={400} height={400} alt='human' />
             </Box>
           </Box>
@@ -94,8 +94,8 @@ const Cart = () => {
               mt={3}
             >
               <Box display='flex' justifyContent='center' alignItems='center'>
-                <Input type='text' placeholder='Enter name' />
-                <Button>Save</Button>
+                <Input type='text' placeholder='Enter name' size='lg' />
+                <Button size='lg'>Save</Button>
               </Box>
             </Box>
           </Box>
