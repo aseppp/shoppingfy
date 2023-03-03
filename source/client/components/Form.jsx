@@ -1,3 +1,4 @@
+import endpoint from '@/service/constUrl';
 import {
   Box,
   Button,
@@ -10,8 +11,38 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import useSwr from 'swr';
+import useSWRMutation from 'swr/mutation';
 
 const Form = ({ onClose }) => {
+  const { register, watch, handleSubmit } = useForm();
+
+  const fetcher = (...args) => fetch(...args).then((res) => res.json());
+  const { data } = useSwr(`${endpoint.BASE_URL}/categories`, fetcher);
+  const { trigger } = useSWRMutation(
+    `${endpoint.BASE_URL}/product`,
+    sendRequest
+  );
+
+  const onSubmit = () => {
+    const formData = new FormData();
+    formData.append('name', watch('name'));
+    formData.append('note', watch('note'));
+    formData.append('categoryId', watch('category'));
+    formData.append('image', watch('image')[0]);
+    // const newData = {
+    //   name: watch('name'),
+    //   note: watch('note'),
+    //   category: watch('category'),
+    //   image: watch('image')[0],
+    // };
+
+    // // trigger(newData);
+    // console.log(formData);
+    trigger(formData);
+  };
+
   return (
     <>
       <Box p={5} height='100vh' position='relative'>
@@ -22,11 +53,12 @@ const Form = ({ onClose }) => {
         </Box>
 
         <Box>
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <VStack spacing={8}>
               <FormControl>
                 <FormLabel color='#34333A'>Name</FormLabel>
                 <Input
+                  {...register('name')}
                   type='name'
                   py={7}
                   size='lg'
@@ -38,7 +70,8 @@ const Form = ({ onClose }) => {
               <FormControl>
                 <FormLabel color='#34333A'>Note (optional)</FormLabel>
                 <Textarea
-                  placeholder='Here is a sample placeholder'
+                  {...register('note')}
+                  placeholder='Enter a note'
                   height='110px'
                   border='2px solid #BDBDBD'
                 />
@@ -65,6 +98,7 @@ const Form = ({ onClose }) => {
                     Select image file
                   </FormLabel>
                   <Input
+                    {...register('image')}
                     type='file'
                     height='61px'
                     multiple
@@ -79,36 +113,45 @@ const Form = ({ onClose }) => {
               <FormControl>
                 <FormLabel color='#34333A'>Category</FormLabel>
                 <Select
-                  placeholder='large size'
+                  {...register('category')}
+                  py={7}
                   size='lg'
-                  height='61px'
-                  border='2px solid #BDBDBD'
+                  placeholder='Select category'
                 >
-                  <option value='option1'>Option 1</option>
-                  <option value='option2'>Option 2</option>
-                  <option value='option3'>Option 3</option>
+                  {data.data.result.map((i, k) => (
+                    <option key={k} value={i.id}>
+                      {i.name}
+                    </option>
+                  ))}
                 </Select>
               </FormControl>
             </VStack>
-          </form>
-        </Box>
 
-        <Box
-          position='absolute'
-          bottom={10}
-          right={0}
-          left={0}
-          w='100%'
-          margin='auto'
-          display='flex'
-          justifyContent='center'
-        >
-          <Button onClick={onClose} mx={3} p={8} variant='ghost'>
-            Cancel
-          </Button>
-          <Button mx={3} p={8} bg='#F9A109' color='white' borderRadius='12px'>
-            Save
-          </Button>
+            <Box
+              position='absolute'
+              bottom={10}
+              right={0}
+              left={0}
+              w='100%'
+              margin='auto'
+              display='flex'
+              justifyContent='center'
+            >
+              <Button onClick={onClose} mx={3} p={8} variant='ghost'>
+                Cancel
+              </Button>
+              <Button
+                type='submit'
+                mx={3}
+                p={8}
+                bg='#F9A109'
+                color='white'
+                borderRadius='12px'
+              >
+                Save
+              </Button>
+            </Box>
+          </form>
         </Box>
       </Box>
     </>
@@ -116,3 +159,10 @@ const Form = ({ onClose }) => {
 };
 
 export default Form;
+
+async function sendRequest(url, { arg }) {
+  return fetch(url, {
+    method: 'POST',
+    body: arg,
+  });
+}

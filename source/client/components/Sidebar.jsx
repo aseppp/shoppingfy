@@ -43,7 +43,7 @@ export const Sidebar = () => {
           alignItems='center'
           flexDirection='column'
           height='100vh'
-          py={5}
+          py={[3, 5]}
           zIndex='20'
         >
           <Box w='50px'>
