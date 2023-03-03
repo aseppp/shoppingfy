@@ -1,5 +1,5 @@
-import { DetailSidebarContext } from '@/app/context';
-import { Box, Button, Icon, Image, VStack, Text } from '@chakra-ui/react';
+import { DetailSidebarContext, IdItemsContext } from '@/app/context';
+import { Box, Button, Icon, VStack, Text, Img } from '@chakra-ui/react';
 import { IoIosArrowRoundBack } from 'react-icons/io';
 import React, { useContext } from 'react';
 import useSwr from 'swr';
@@ -7,14 +7,10 @@ import endpoint from '@/service/constUrl';
 
 const ViewItems = () => {
   const [isOpenDetail, setIsOpenDetail] = useContext(DetailSidebarContext);
+  const [id] = useContext(IdItemsContext);
 
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
-  const { data } = useSwr(
-    `${endpoint.BASE_URL}/product/${'clenmmcpp00021imdxf4zkp98'}`,
-    fetcher
-  );
-
-  console.log(data);
+  const { data } = useSwr(`${endpoint.BASE_URL}/product/${id}`, fetcher);
 
   return (
     <>
@@ -33,7 +29,7 @@ const ViewItems = () => {
         <Box>
           <VStack spacing={4} justifyContent='left' alignItems='normal'>
             <Box mt={5}>
-              <Image
+              <Img
                 src={`${endpoint.IMAGE_URL}/${data?.data?.result?.image}`}
                 display='flex'
                 m='auto'

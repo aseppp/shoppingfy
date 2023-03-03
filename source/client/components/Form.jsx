@@ -1,4 +1,3 @@
-import endpoint from '@/service/constUrl';
 import {
   Alert,
   AlertIcon,
@@ -16,6 +15,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import useSwr from 'swr';
 import useSWRMutation from 'swr/mutation';
+import endpoint from '@/service/constUrl';
 
 const Form = ({ onClose }) => {
   const { handleSubmit, register, watch } = useForm();

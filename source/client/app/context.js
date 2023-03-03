@@ -23,3 +23,14 @@ export const DetailSidebarProvider = ({ children }) => {
     </DetailSidebarContext.Provider>
   );
 };
+
+export const IdItemsContext = createContext();
+export const IdItemsProvider = ({ children }) => {
+  const [id, setId] = useState(null);
+
+  return (
+    <IdItemsContext.Provider value={[id, setId]}>
+      {children}
+    </IdItemsContext.Provider>
+  );
+};

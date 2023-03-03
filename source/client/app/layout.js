@@ -7,7 +7,11 @@ import { Box, ChakraProvider } from '@chakra-ui/react';
 import { extendTheme } from '@chakra-ui/react';
 import { mode } from '@chakra-ui/theme-tools';
 import { Quicksand } from 'next/font/google';
-import { DetailSidebarProvider, FunctionBarProvider } from './context';
+import {
+  DetailSidebarProvider,
+  FunctionBarProvider,
+  IdItemsProvider,
+} from './context';
 import './globals.css';
 
 const quicksand = Quicksand({
@@ -40,8 +44,10 @@ export default function RootLayout({ children }) {
             <FunctionBarProvider>
               <DetailSidebarProvider>
                 <Sidebar />
-                <FunctionSidebar />
-                <Box>{children}</Box>
+                <IdItemsProvider>
+                  <FunctionSidebar />
+                  <Box>{children}</Box>
+                </IdItemsProvider>
               </DetailSidebarProvider>
             </FunctionBarProvider>
           </ChakraProvider>

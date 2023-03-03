@@ -5,11 +5,18 @@ import { Box, Text, VStack, Icon } from '@chakra-ui/react';
 import useSwr from 'swr';
 import endpoint from '@/service/constUrl';
 import { HiPlus } from 'react-icons/hi';
-import { DetailSidebarContext, FunctionBarContext } from './context';
+import {
+  DetailSidebarContext,
+  FunctionBarContext,
+  IdItemsContext,
+} from './context';
 
 export default function Home() {
   const [isOpen, setIsOpen] = useContext(FunctionBarContext);
   const [isOpenDetail, setIsOpenDetail] = useContext(DetailSidebarContext);
+  const [id, setId] = useContext(IdItemsContext);
+
+  console.log(id);
 
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const { data } = useSwr(`${endpoint.BASE_URL}/categories`, fetcher);
@@ -32,7 +39,7 @@ export default function Home() {
         mt={['0', '57px']}
         mr={isOpen || isOpenDetail ? [0, '400px'] : 0}
         pt={['20px', 0]}
-        spacing={[10, 16]}
+        spacing={[10, 8]}
         alignItems='normal'
       >
         {data &&
@@ -60,9 +67,12 @@ export default function Home() {
                     borderRadius='2xl'
                   >
                     <Text
+                      lineHeight='20px'
                       fontWeight='600'
                       onClick={() => {
-                        setIsOpenDetail(!isOpenDetail), setIsOpen(false);
+                        setIsOpenDetail(!isOpenDetail),
+                          setIsOpen(false),
+                          setId(i.id);
                       }}
                       cursor='pointer'
                     >
