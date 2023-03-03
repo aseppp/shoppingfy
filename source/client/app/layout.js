@@ -3,11 +3,11 @@
 import FunctionSidebar from '@/components/FunctionSidebar';
 import { Sidebar } from '@/components/Sidebar';
 import { CacheProvider } from '@chakra-ui/next-js';
-import { ChakraProvider } from '@chakra-ui/react';
+import { Box, ChakraProvider } from '@chakra-ui/react';
 import { extendTheme } from '@chakra-ui/react';
 import { mode } from '@chakra-ui/theme-tools';
 import { Quicksand } from 'next/font/google';
-import { FunctionBarProvider } from './context';
+import { DetailSidebarProvider, FunctionBarProvider } from './context';
 import './globals.css';
 
 const quicksand = Quicksand({
@@ -38,11 +38,12 @@ export default function RootLayout({ children }) {
         <CacheProvider>
           <ChakraProvider theme={theme}>
             <FunctionBarProvider>
-              <Sidebar />
-              <FunctionSidebar />
+              <DetailSidebarProvider>
+                <Sidebar />
+                <FunctionSidebar />
+                <Box>{children}</Box>
+              </DetailSidebarProvider>
             </FunctionBarProvider>
-
-            {children}
           </ChakraProvider>
         </CacheProvider>
       </body>

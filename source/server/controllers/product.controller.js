@@ -82,6 +82,9 @@ exports.getById = async (req, res) => {
       where: {
         id: id,
       },
+      include: {
+        category: true,
+      },
     });
     res.status(200).send({
       status: 'success',

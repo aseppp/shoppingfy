@@ -12,3 +12,14 @@ export const FunctionBarProvider = ({ children }) => {
     </FunctionBarContext.Provider>
   );
 };
+
+export const DetailSidebarContext = createContext();
+export const DetailSidebarProvider = ({ children }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <DetailSidebarContext.Provider value={[isOpen, setIsOpen]}>
+      {children}
+    </DetailSidebarContext.Provider>
+  );
+};

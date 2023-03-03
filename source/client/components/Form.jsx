@@ -1,5 +1,7 @@
 import endpoint from '@/service/constUrl';
 import {
+  Alert,
+  AlertIcon,
   Box,
   Button,
   FormControl,
@@ -16,11 +18,10 @@ import useSwr from 'swr';
 import useSWRMutation from 'swr/mutation';
 
 const Form = ({ onClose }) => {
-  const { register, watch, handleSubmit } = useForm();
-
+  const { handleSubmit, register, watch } = useForm();
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const { data } = useSwr(`${endpoint.BASE_URL}/categories`, fetcher);
-  const { trigger } = useSWRMutation(
+  const { trigger, isMutating } = useSWRMutation(
     `${endpoint.BASE_URL}/product`,
     sendRequest
   );
@@ -31,15 +32,7 @@ const Form = ({ onClose }) => {
     formData.append('note', watch('note'));
     formData.append('categoryId', watch('category'));
     formData.append('image', watch('image')[0]);
-    // const newData = {
-    //   name: watch('name'),
-    //   note: watch('note'),
-    //   category: watch('category'),
-    //   image: watch('image')[0],
-    // };
 
-    // // trigger(newData);
-    // console.log(formData);
     trigger(formData);
   };
 
@@ -53,6 +46,13 @@ const Form = ({ onClose }) => {
         </Box>
 
         <Box>
+          {isMutating && (
+            <Alert status='success' variant='solid' mb={3}>
+              <AlertIcon />
+              Data uploaded to the server. Fire on!
+            </Alert>
+          )}
+
           <form onSubmit={handleSubmit(onSubmit)}>
             <VStack spacing={8}>
               <FormControl>
