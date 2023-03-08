@@ -13,6 +13,7 @@ import {
   IdItemsProvider,
 } from './context';
 import './globals.css';
+import { Providers } from './redux/Providers';
 
 const quicksand = Quicksand({
   subsets: ['latin'],
@@ -39,19 +40,21 @@ export default function RootLayout({ children }) {
     <html lang='en'>
       <head />
       <body className={quicksand.className}>
+        {/* <Providers> */}
         <CacheProvider>
           <ChakraProvider theme={theme}>
             <FunctionBarProvider>
-              <DetailSidebarProvider>
-                <Sidebar />
-                <IdItemsProvider>
+              <IdItemsProvider>
+                <DetailSidebarProvider>
+                  <Sidebar />
                   <FunctionSidebar />
                   <Box>{children}</Box>
-                </IdItemsProvider>
-              </DetailSidebarProvider>
+                </DetailSidebarProvider>
+              </IdItemsProvider>
             </FunctionBarProvider>
           </ChakraProvider>
         </CacheProvider>
+        {/* </Providers> */}
       </body>
     </html>
   );

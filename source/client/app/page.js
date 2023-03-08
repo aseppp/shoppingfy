@@ -16,8 +16,6 @@ export default function Home() {
   const [isOpenDetail, setIsOpenDetail] = useContext(DetailSidebarContext);
   const [id, setId] = useContext(IdItemsContext);
 
-  console.log(id);
-
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const { data } = useSwr(`${endpoint.BASE_URL}/categories`, fetcher);
 
