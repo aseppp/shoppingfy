@@ -10,6 +10,7 @@ import {
   FunctionBarContext,
   IdItemsContext,
 } from './context';
+import { useSelector } from 'react-redux';
 
 export default function Home() {
   const [isOpen, setIsOpen] = useContext(FunctionBarContext);
@@ -18,6 +19,9 @@ export default function Home() {
 
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const { data } = useSwr(`${endpoint.BASE_URL}/categories`, fetcher);
+
+  const cart = useSelector((state) => state.cart);
+  console.log(cart);
 
   return (
     <>
